@@ -1,0 +1,11 @@
+[Unit]
+Description=DeliHerb Proxypass for parser
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/root/deliherb
+ExecStart=/usr/bin/python3 proxy.py
+
+[Install]
+WantedBy=multi-user.target

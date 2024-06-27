@@ -1,0 +1,15 @@
+[Unit]
+Description=DeliHerb Core for parser
+After=network.target
+
+[Service]
+User=root
+LimitAS=infinity
+LimitRSS=infinity
+LimitCORE=infinity
+LimitNOFILE=65536
+WorkingDirectory=/root/deliherb
+ExecStart=/usr/bin/python3 taskwatch.py
+
+[Install]
+WantedBy=multi-user.target

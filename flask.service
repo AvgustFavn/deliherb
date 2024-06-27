@@ -1,0 +1,11 @@
+[Unit]
+Description=DeliHerb Core for web - interface
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/root/deliherb
+ExecStart=/usr/local/bin/gunicorn --workers 3 --bind 127.0.0.1:2500 app:app
+
+[Install]
+WantedBy=multi-user.target
