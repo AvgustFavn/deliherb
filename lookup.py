@@ -123,6 +123,7 @@ def newinfo(url:str) -> None:
             info = getinfo(url=url)
             if info == False:
                 return None
+
             with Session(engine) as session:
                 of: Offer = session.query(Offer).where(Offer.url == info[0]).scalar()
                 if of:
@@ -144,8 +145,9 @@ def newinfo(url:str) -> None:
                 overflow-=1
                 return None
         except Exception:
-            print(traceback.format_exc(),flush=True)
-            print(url,flush=True)
+            # print(traceback.format_exc(),flush=True)
+            # print(url,flush=True)
+            newinfo(url)
 
 def runinfo() -> None:
     global overflow
@@ -171,10 +173,13 @@ def getlinks():
 
 def getbadlinks():
     global links
-    with Session(engine) as session:
-        urls = session.query(Offer.url).where(Offer.barcode == '').all()
-        links = urls
-        print(len(links),flush=True)
+    try:
+        with Session(engine) as session:
+            urls = session.query(Offer.url).where(Offer.barcode == '').all()
+            links = urls
+            print(len(links),flush=True)
+    except:
+        getbadlinks()
 
 def getports():
     global ports
@@ -188,8 +193,8 @@ def getports():
             print(f'known ports: {ports}')
             time.sleep(1)
         except Exception:
-            print(traceback.print_exc())
-    
+            # print(traceback.print_exc())
+            getports()
 
             
         
