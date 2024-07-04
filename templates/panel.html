@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    <title>DeliHerb-Parser</title>
+</head>
+<body style="height: 100vh;">
+    <main class="container" style="height: 100%;">
+        <div class="grid">
+            <div>
+                <form action="/show" method="get">
+                    <button type="submit">Посмотреть XML</button>
+                </form>
+            </div>
+            <div>
+                <form action="/download" method="get">
+                    <button type="submit">Скачать XML</button>
+                </form>
+            </div>
+        </div>
+        <div class="grid">
+            <div>
+                <form action="/show-min" method="get">
+                    <button type="submit">Посмотреть XML (Мин.)</button>
+                </form>
+            </div>
+            <div>
+                <form action="/download-min" method="get">
+                    <button type="submit">Скачать XML (Мин.)</button>
+                </form>
+            </div>
+        </div>
+        <form action="/task" method="post">
+            <fieldset role="group">
+                <input type="time" name="time" aria-label="Время" />
+                <select name="weekday" aria-label="День недели" required>
+                    <option value="7">Каждый день</option>
+                    <option value="0">Понедельник</option>
+                    <option value="1">Вторник</option>
+                    <option value="2">Среда</option>
+                    <option value="3">Четверг</option>
+                    <option value="4">Пятница</option>
+                    <option value="5">Суббота</option>
+                    <option value="6">Воскресенье</option>
+                </select>
+                <button type="submit">Создать</button>
+            </fieldset>
+
+            <small>Новое задание будет отложено до тех пор, пока не закончится предыдущее</small>
+        </form>
+
+        <table>
+            <thead>
+              <tr>
+                <th scope="col">Время</th>
+                <th scope="col">День недели</th>
+                <th scope="col">Действие</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for i in tasks %}
+                    <tr>
+                        <form action="/delete" method="post">
+                            <input type="hidden" name="index" value="{{i[0]}}">
+                            <th scope="row">{{i[2]}}</th>
+                            <td>{{i[1]}}</td>
+                            <td><button type="submit">Удалить</button></td>
+                        </form>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </main>
+    
+</body>
+</html>
