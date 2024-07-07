@@ -28,61 +28,13 @@ def watcher():
                     now =  datetime.datetime.strptime(datetime.datetime.today().strftime('%H:%M'),'%H:%M')
                     delta = time - now
                     delta = delta.total_seconds()
-
+                    
                     if delta <= 0 and (today == weekday or weekday == 7) and (weekday not in taskdays[str(datetime.datetime.today().date())] and time not in taskdays[str(datetime.datetime.today().date())]):
                         taskdays[str(datetime.datetime.today().date())].append([weekday,time])
                         run()
             sleep.sleep(15)
         except:
-            try:
-                with Session(engine) as session:
-                    for task in session.query(Task).all():
-                        weekday = int(task.weekday)
-                        today = datetime.datetime.today().weekday()
-                        time = datetime.datetime.strptime(str(task.time), '%H:%M')
-                        now = datetime.datetime.strptime(datetime.datetime.today().strftime('%H:%M'), '%H:%M')
-                        delta = time - now
-                        delta = delta.total_seconds()
-
-                        if delta <= 0 and (today == weekday or weekday == 7) and (
-                                weekday not in taskdays[str(datetime.datetime.today().date())] and time not in taskdays[
-                            str(datetime.datetime.today().date())]):
-                            taskdays[str(datetime.datetime.today().date())].append([weekday, time])
-                            run()
-                sleep.sleep(15)
-            except:
-                try:
-                    with Session(engine) as session:
-                        for task in session.query(Task).all():
-                            weekday = int(task.weekday)
-                            today = datetime.datetime.today().weekday()
-                            time = datetime.datetime.strptime(str(task.time), '%H:%M')
-                            now = datetime.datetime.strptime(datetime.datetime.today().strftime('%H:%M'), '%H:%M')
-                            delta = time - now
-                            delta = delta.total_seconds()
-
-                            if delta <= 0 and (today == weekday or weekday == 7) and (
-                                    weekday not in taskdays[str(datetime.datetime.today().date())] and time not in taskdays[
-                                str(datetime.datetime.today().date())]):
-                                taskdays[str(datetime.datetime.today().date())].append([weekday, time])
-                                run()
-                    sleep.sleep(15)
-                except:
-                    with Session(engine) as session:
-                        for task in session.query(Task).all():
-                            weekday = int(task.weekday)
-                            today = datetime.datetime.today().weekday()
-                            time = datetime.datetime.strptime(str(task.time), '%H:%M')
-                            now = datetime.datetime.strptime(datetime.datetime.today().strftime('%H:%M'), '%H:%M')
-                            delta = time - now
-                            delta = delta.total_seconds()
-
-                            if delta <= 0 and (today == weekday or weekday == 7) and (
-                                    weekday not in taskdays[str(datetime.datetime.today().date())] and time not in
-                                    taskdays[str(datetime.datetime.today().date())]):
-                                taskdays[str(datetime.datetime.today().date())].append([weekday, time])
-                                run()
-                    sleep.sleep(15)
+            watcher()
                     
 if __name__ == "__main__":
     threading.Thread(target=lookup.getports).start()
